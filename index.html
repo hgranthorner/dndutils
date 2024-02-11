@@ -12,8 +12,24 @@
 <main>
   <h1>Travel Calculator</h1>
   <table>
-    <tr><td>Hours of Travel Per Day</td> <td><input type="number" name="htpd" id="htpd" value="8"></td></tr>
-    <tr><td>Feet of Movement Per Turn</td> <td><input type="number" name="fmpt" id="fmpt" value="30"></td></tr>
+    <tr>
+      <td>
+        <label for="htpd">
+          Hours of Travel Per Day
+        </label>
+      </td>
+      <td>
+        <input type="number" name="htpd" id="htpd" value="8">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="fmpt">Feet of Movement Per Turn</label>
+      </td>
+      <td>
+        <input type="number" name="fmpt" id="fmpt" value="30">
+      </td>
+    </tr>
   </table>
   <br>
   <h2>Result</h2>
@@ -60,20 +76,23 @@
      * @property {number} milesPerHour
      */
 
+    const secondsPerHour = 3600
+    const feetPerMile = 5280
+    const secondsPerRound = 6
+
     /**
      * @param {number} hoursOfTravelPerDay
      * @param {number} feetOfMovementPerRound
-     * @returns CalculationResult
+     * @returns {CalculationResult}
      */
     function calculateTravel(hoursOfTravelPerDay, feetOfMovementPerRound) {
-      const secondsPerHour = 3600
-      const feetPerMile = 5280
-      const secondsPerRound = 6
+
       const feetPerSecond = feetOfMovementPerRound / secondsPerRound
       const feetPerHour = feetPerSecond * secondsPerHour
       const milesPerHour = feetPerHour / feetPerMile
+      const travelPerDay = milesPerHour * hoursOfTravelPerDay;
       return {
-        travelPerDay: milesPerHour * hoursOfTravelPerDay,
+        travelPerDay,
         secondsPerHour,
         feetPerMile,
         secondsPerRound,
