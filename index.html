@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dungeons and Dragons Utilities</title>
+</head>
+<body>
+<main>
+  <h1>Travel Calculator</h1>
+  <label>Hours of Travel Per Day <input type="number" name="htpd" id="htpd" value="8"></label>
+  <br>
+  <label>Feet of Movement Per Turn <input type="number" name="fmpt" id="fmpt" value="30"></label>
+  <br>
+  <h2>Result</h2>
+  <div id="travel-calculator-results"></div>
+  <div id="travel-calculator-calculation">
+    <h2>Calculation</h2>
+    <table>
+      <tr>
+        <td>Seconds Per Hour</td>
+        <td id="secondsPerHour"></td>
+      </tr>
+      <tr>
+        <td>Feet Per Mile</td>
+        <td id="feetPerMile"></td>
+      </tr>
+      <tr>
+        <td>Seconds Per Round</td>
+        <td id="secondsPerRound"></td>
+      </tr>
+      <tr>
+        <td>Feet Per Second</td>
+        <td id="feetPerSecond"></td>
+      </tr>
+      <tr>
+        <td>Feet Per Hour</td>
+        <td id="feetPerHour"></td>
+      </tr>
+      <tr>
+        <td>Miles Per Hour</td>
+        <td id="milesPerHour"></td>
+      </tr>
+    </table>
+  </div>
+
+  <script type="application/javascript">
+    /**
+     * @param {number} hoursOfTravelPerDay
+     * @param {number} feetOfMovementPerRound
+     */
+    function calculateTravel(hoursOfTravelPerDay, feetOfMovementPerRound) {
+      const secondsPerHour = 3600
+      const feetPerMile = 5280
+      const secondsPerRound = 6
+      const feetPerSecond = feetOfMovementPerRound / secondsPerRound
+      const feetPerHour = feetPerSecond * secondsPerHour
+      const milesPerHour = feetPerHour / feetPerMile
+      return {
+        travelPerDay: milesPerHour * hoursOfTravelPerDay,
+        secondsPerHour,
+        feetPerMile,
+        secondsPerRound,
+        feetPerSecond,
+        feetPerHour,
+        milesPerHour,
+      }
+    }
+
+    const htpdInput = document.getElementById("htpd")
+    const fmptInput = document.getElementById("fmpt")
+    const results = document.getElementById("travel-calculator-results")
+    for (const input of [htpdInput, fmptInput]) {
+      input.addEventListener("blur", (event) => {
+        const x = calculateTravel(htpdInput.value, fmptInput.value)
+        results.innerText = `${x.travelPerDay.toFixed(2)} Miles Per Day`
+        for (const k in x) {
+          if (k === "travelPerDay") {
+            continue
+          }
+          document.getElementById(k).innerText = `${x[k].toFixed(2)}`
+        }
+      })
+    }
+  </script>
+</main>
+</body>
+</html>
