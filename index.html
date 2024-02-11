@@ -50,8 +50,20 @@
 
   <script type="application/javascript">
     /**
+     * @typedef {Object} CalculationResult
+     * @property {number} travelPerDay
+     * @property {number} secondsPerHour
+     * @property {number} feetPerMile
+     * @property {number} secondsPerRound
+     * @property {number} feetPerSecond
+     * @property {number} feetPerHour
+     * @property {number} milesPerHour
+     */
+
+    /**
      * @param {number} hoursOfTravelPerDay
      * @param {number} feetOfMovementPerRound
+     * @returns CalculationResult
      */
     function calculateTravel(hoursOfTravelPerDay, feetOfMovementPerRound) {
       const secondsPerHour = 3600
@@ -71,6 +83,9 @@
       }
     }
 
+    /**
+     * @param {CalculationResult} calculationResults
+     */
     function displayCalculations(calculationResults) {
       const results = document.getElementById("travel-calculator-results")
       results.innerText = `${calculationResults.travelPerDay.toFixed(2)} Miles Per Day`
@@ -87,7 +102,7 @@
     const x = calculateTravel(htpdInput.value, fmptInput.value)
     displayCalculations(x)
     for (const input of [htpdInput, fmptInput]) {
-      input.addEventListener("blur", (_event) => {
+      input.addEventListener("change", (_event) => {
         const x = calculateTravel(htpdInput.value, fmptInput.value)
         displayCalculations(x)
       })
